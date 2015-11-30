@@ -98,9 +98,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XmlDocument\XmlDocument.csproj">
+    <ProjectReference Include="..\XmlDocument\MyXmlDocument.csproj">
       <Project>{58e18198-4093-4c74-beca-e895a43313d1}</Project>
-      <Name>XmlDocument</Name>
+      <Name>MyXmlDocument</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

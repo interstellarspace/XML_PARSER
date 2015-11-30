@@ -3,37 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 
-namespace XmlDocument
+namespace MyXmlDocument
 {
-    public class XmlEdmx : XmlDocument
+    public class XmlEdmx : MyXmlDocument
     {
-        public IEnumerable<XElement> ieStorageModels;
-        public IEnumerable<XElement> ieConceptualModels;
-        public IEnumerable<XElement> ieMappings;
+        public XmlNode ieStorageModels;
+        public XmlNode ieConceptualModels;
+        public XmlNode ieMappings;
 
         public XmlEdmx(String strFilename) : base(strFilename) 
         { 
             InitRuntime();
         }
 
-        public XmlEdmx(String strFilename, String strNameSpace) : base(strFilename, strNameSpace) 
-        { 
-            InitRuntime();
-        }
-
         private void InitRuntime()
         {
-            ieStorageModels = InitModels("StorageModels");
-            ieConceptualModels = InitModels("ConceptualModels");
-            ieMappings = InitModels("Mappings");
+            ieStorageModels = InitModels(1);
+            ieConceptualModels = InitModels(3);
+            ieMappings = InitModels(5);
         }
 
-        private IEnumerable<XElement> InitModels(String model)
+        private XmlNode InitModels(int num)
         {
-            var result = GetNodes(model).Descendants();
-            return result;
+            XmlNode list = this.xDoc.ChildNodes[1].ChildNodes[1].ChildNodes[num];
+            return list;
         }
 
 

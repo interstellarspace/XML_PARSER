@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B4BDD4
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlDocument", "XmlDocument\XmlDocument.csproj", "{58E18198-4093-4C74-BECA-E895A43313D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyXmlDocument", "XmlDocument\MyXmlDocument.csproj", "{58E18198-4093-4C74-BECA-E895A43313D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
