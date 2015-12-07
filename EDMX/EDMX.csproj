@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{58E18198-4093-4C74-BECA-E895A43313D1}</ProjectGuid>
+    <ProjectGuid>{11241F6A-7B23-4961-B4CE-3EB376514E70}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyXmlDocument</RootNamespace>
-    <AssemblyName>XmlDocument</AssemblyName>
+    <RootNamespace>EDMX</RootNamespace>
+    <AssemblyName>EDMX</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,9 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyXmlDocument.cs" />
+    <Compile Include="EDMX.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="objXmlEdmx.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XmlDocument\MyXmlDocument.csproj">
+      <Project>{58e18198-4093-4c74-beca-e895a43313d1}</Project>
+      <Name>MyXmlDocument</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

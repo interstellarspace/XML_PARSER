@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Xml;
-using MyXmlDocument;
 using System.Xml.XPath;
+using EDMX;
+using MyXmlDocument;
 
 namespace XML_PARSER
 {
@@ -23,8 +24,26 @@ namespace XML_PARSER
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            MyXmlDocument.XmlEdmx xDoc;
-            xDoc = new MyXmlDocument.XmlEdmx(@"D:\My Data\Github Repo\XML_PARSER\Core.edmx");
+            string path;
+            //path = @"D:\My Data\Github Repo\XML_PARSER\XML_PARSER\Sample.xml";
+            path = @"D:\My Data\Github Repo\XML_PARSER\Core.edmx";
+
+            objEdmx edmx = new objEdmx(path);
+
+            /*
+            //var query = from department in doc.Elements("edmx:Edmx").Elements("edmx:Runtime")
+                        from item in department.Elements("edmx:StorageModels")
+                        select item;
+                        //select new Item
+                        //{
+                        //    DepartmentName = department.Attribute("Name").Value,
+                        //    DepartmentNames = department.Attributes().Where(a => a.Name != "Name").ToDictionary(a => a.Name.LocalName, a => a.Value),
+                        //    Name = item.Attribute("Name").Value,
+                        //    Names = item.Attributes().Where(a => a.Name != "Name").ToDictionary(a => a.Name.LocalName, a => a.Value),
+                        //};
+            
+            var items = query.ToList();
+            */
         }
     }
 }

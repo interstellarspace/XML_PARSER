@@ -60,6 +60,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Sample.xml" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -98,6 +99,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EDMX\EDMX.csproj">
+      <Project>{11241f6a-7b23-4961-b4ce-3eb376514e70}</Project>
+      <Name>EDMX</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XmlDocument\MyXmlDocument.csproj">
       <Project>{58e18198-4093-4c74-beca-e895a43313d1}</Project>
       <Name>MyXmlDocument</Name>

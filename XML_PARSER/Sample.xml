@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Departments>
+  <Department Name="Sports" Title="Sports Department" Path="/sports" en-us="Sports" de-de="Sport">
+    <Item Name="Football" en-us="Football" de-de="Fußball" es-mx="" />
+    <Item Name="TennisBall" en-us="Tennis Ball" de-de="Tennisball" />
+  </Department>
+
+  <Department Name="Automotive" Title="Automotive Department" Path="/autos" en-us="Automotive" de-de="kraftfahrtechnisch">
+    <Item Name="Oil" en-us="Oil" de-de="Öl" />
+    <Item Name="Tires" en-us="Tires" de-de="Bereifung" es-mx="Ruedas" />
+  </Department>
+</Departments>
