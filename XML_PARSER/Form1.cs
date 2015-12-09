@@ -12,6 +12,9 @@ using System.Xml;
 using System.Xml.XPath;
 using EDMX;
 using MyXmlDocument;
+using System.Xml.Serialization;
+using SerializeEDMX;
+using System.IO;
 
 namespace XML_PARSER
 {
@@ -28,22 +31,28 @@ namespace XML_PARSER
             //path = @"D:\My Data\Github Repo\XML_PARSER\XML_PARSER\Sample.xml";
             path = @"D:\My Data\Github Repo\XML_PARSER\Core.edmx";
 
-            objEdmx edmx = new objEdmx(path);
+            //objEdmx edmx = new objEdmx(path);
 
-            /*
-            //var query = from department in doc.Elements("edmx:Edmx").Elements("edmx:Runtime")
-                        from item in department.Elements("edmx:StorageModels")
-                        select item;
-                        //select new Item
-                        //{
-                        //    DepartmentName = department.Attribute("Name").Value,
-                        //    DepartmentNames = department.Attributes().Where(a => a.Name != "Name").ToDictionary(a => a.Name.LocalName, a => a.Value),
-                        //    Name = item.Attribute("Name").Value,
-                        //    Names = item.Attributes().Where(a => a.Name != "Name").ToDictionary(a => a.Name.LocalName, a => a.Value),
-                        //};
-            
-            var items = query.ToList();
-            */
+            XmlSerializer deserializer = new XmlSerializer(typeof(SerializeEDMX.SerializeEdmx));
+            TextReader reader = new StreamReader(@"D:\My Data\Github Repo\XML_PARSER\SerializeEDMX\Core.xml");
+            object obj = deserializer.Deserialize(reader);
+            SerializeEDMX.SerializeEdmx XmlData = (SerializeEDMX.SerializeEdmx)obj;
+            reader.Close();
         }
     }
 }
+
+/*
+           //var query = from department in doc.Elements("edmx:Edmx").Elements("edmx:Runtime")
+                       from item in department.Elements("edmx:StorageModels")
+                       select item;
+                       //select new Item
+                       //{
+                       //    DepartmentName = department.Attribute("Name").Value,
+                       //    DepartmentNames = department.Attributes().Where(a => a.Name != "Name").ToDictionary(a => a.Name.LocalName, a => a.Value),
+                       //    Name = item.Attribute("Name").Value,
+                       //    Names = item.Attributes().Where(a => a.Name != "Name").ToDictionary(a => a.Name.LocalName, a => a.Value),
+                       //};
+            
+           var items = query.ToList();
+           */

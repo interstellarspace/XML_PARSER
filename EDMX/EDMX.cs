@@ -20,15 +20,17 @@ namespace EDMX
         private XNamespace strEdmxNs;
         private XNamespace strSchemaSmNs;
         private XNamespace strSchemaCsNs;
+        private XNamespace strSchemaMpNs;
        
         public objEdmx(string path) : base(path)
         {
             this.strEdmxNs = XNamespace.Get(@"http://schemas.microsoft.com/ado/2008/10/edmx");
             this.strSchemaSmNs = XNamespace.Get(@"http://schemas.microsoft.com/ado/2009/02/edm/ssdl");
             this.strSchemaCsNs = XNamespace.Get(@"http://schemas.microsoft.com/ado/2008/09/edm");
+            this.strSchemaMpNs = XNamespace.Get(@"http://schemas.microsoft.com/ado/2008/09/mapping/cs");
             this.objStorageModel = CreateStorageModel();
             this.objConceptualModel = CreateConceptualModel();
-            //this.objMappings = CreateMappings();
+            this.objMappings = CreateMappings();
         }
 
         private StorageModel CreateStorageModel()
@@ -43,7 +45,8 @@ namespace EDMX
         }
         private Mappings CreateMappings()
         {
-            throw new NotImplementedException();
+            var model = GetModel("Mappings");
+            return new Mappings(model, this.strEdmxNs, this.strSchemaMpNs);
         }
 
         private IEnumerable<XElement> GetModel(string strModel)
@@ -88,26 +91,37 @@ namespace EDMX
                         select e;
             return query;
         }
+
+        public IEnumerable<XElement> GetEntityContainerMapping(IEnumerable<XElement> data, XNamespace nsEdmx, XNamespace nsSchema)
+        {
+            var query = from schema in data.Elements(nsSchema + "Mapping")
+                        from e in schema.Elements(nsSchema + "EntityContainerMapping")
+                        select e;
+            return query;
+        }
     }
 
     public abstract class Model : EdmxObjects
     {
-        
+        public EntityContainer EntityContainer;
+        public IEnumerable<XElement> EntityTypes;
+        public IEnumerable<XElement> Associations;
+        public IEnumerable<XElement> model;
+        public XNamespace nsEdmx;
+        public XNamespace nsSchema;
     }
 
     public class StorageModel : Model
-    {
-        EntityContainer EntityContainer;
-        IEnumerable<XElement> EntityTypes;
-        IEnumerable<XElement> Associations;
+    {        
         IEnumerable<XElement> Functions;
-        private IEnumerable<XElement> model;
-
+        
         public StorageModel(IEnumerable<XElement> model, XNamespace nsEdmx, XNamespace nsSchema)
         {
             var schema = GetSchema(model, nsEdmx, nsSchema);
             this.EntityContainer = new EntityContainer(model, nsEdmx, nsSchema);
             this.model = model;
+            this.nsEdmx = nsEdmx;
+            this.nsSchema = nsSchema;
             this.EntityTypes = ParseSchema("EntityType", schema, nsSchema);
             this.Associations = ParseSchema("Association", schema, nsSchema);
             this.Functions = ParseSchema("Function", schema, nsSchema);
@@ -116,16 +130,14 @@ namespace EDMX
 
     public class ConceptualModel : Model
     {
-        EntityContainer EntityContainer;
-        IEnumerable<XElement> EntityTypes;
-        IEnumerable<XElement> Associations;
-        private IEnumerable<XElement> model;
 
         public ConceptualModel(IEnumerable<XElement> model, XNamespace nsEdmx, XNamespace nsSchema)
         {
             var schema = GetSchema(model, nsEdmx, nsSchema);
             this.EntityContainer = new EntityContainer(model, nsEdmx, nsSchema);
             this.model = model;
+            this.nsEdmx = nsEdmx;
+            this.nsSchema = nsSchema;
             this.EntityTypes = ParseSchema("EntityType", schema, nsSchema);
             this.Associations = ParseSchema("Association", schema, nsSchema);
         }
@@ -133,7 +145,15 @@ namespace EDMX
 
     public class Mappings : Model
     {
-        EntityContainerMapping EntityContainerMapping;
+        public EntityContainerMapping EntityContainerMapping;
+        public Mappings(IEnumerable<XElement> model, XNamespace nsEdmx, XNamespace nsSchema)
+        {
+            this.model = model;
+            this.nsEdmx = nsEdmx;
+            this.nsSchema = nsSchema;
+            var schema = GetEntityContainerMapping(model, nsEdmx, nsSchema);
+            this.EntityContainerMapping = new EntityContainerMapping(schema, nsEdmx, nsSchema);
+        }
     }
 
     public class EntityContainer : EdmxObjects
@@ -155,12 +175,70 @@ namespace EDMX
         }
     }
 
-    public class EntityContainerMapping
+    public class EntityContainerMapping : EdmxObjects
     {
-        string Name;
-        IEnumerable<XElement> EntitySetMappings;
+        string StorageEntityContainer; //TODO
+        string CdmEntityContainer; //TODO
+        EntitySetMapping EntitySetMappings;
         IEnumerable<XElement> FunctionImportMapping;
+
+        public EntityContainerMapping(IEnumerable<XElement> schema, XNamespace nsEdmx, XNamespace nsSchema)
+        {
+            this.EntitySetMappings = new EntitySetMapping(schema, nsEdmx, nsSchema);
+            this.FunctionImportMapping = ParseEntityContainer("FunctionImportMapping", schema, nsSchema);
+        }
     }
+
+    public class EntitySetMapping
+    {
+        string Name; //TODO
+        EntityTypeMapping objEntityContainerMappings;
+        private IEnumerable<XElement> schema;
+        private XNamespace nsEdmx;
+        private XNamespace nsSchema;
+
+        public EntitySetMapping(IEnumerable<XElement> schema, XNamespace nsEdmx, XNamespace nsSchema)
+        {
+            // TODO: Complete member initialization
+            this.schema = schema;
+            this.nsEdmx = nsEdmx;
+            this.nsSchema = nsSchema;
+        }
+    }
+
+    public class EntityTypeMapping
+    {
+        string TypeName; //TODO
+        MappingFragment MappingFragment;
+        ModificationFunctionMapping ModificationFunctionMapping;
+    }
+
+    public class MappingFragment
+    {
+        string StoreEntitySet; //TODO
+        IEnumerable<XElement> ScalarProperty;
+    }
+
+    public class ModificationFunctionMapping //TODO
+    {
+        UpdateFunction UpdateFunction;
+        InsertFunction InsertFunction;
+    }
+
+    public class UpdateFunction //TODO
+    {
+        string FunctionName;
+        string RowsAffectedParameter;
+        IEnumerable<XElement> ScalarProperty;
+    }
+
+    public class InsertFunction //TODO
+    {
+        string FunctionName;
+        string RowsAffectedParameter;
+        IEnumerable<XElement> ScalarProperty;
+    }
+
 
     /*
     public class EntitySet
@@ -293,3 +371,4 @@ namespace EDMX
     }
     */
 }
+
