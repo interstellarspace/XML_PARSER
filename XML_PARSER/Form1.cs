@@ -34,10 +34,11 @@ namespace XML_PARSER
             //objEdmx edmx = new objEdmx(path);
 
             XmlSerializer deserializer = new XmlSerializer(typeof(SerializeEDMX.SerializeEdmx));
-            TextReader reader = new StreamReader(@"D:\My Data\Github Repo\XML_PARSER\SerializeEDMX\Core.xml");
+            TextReader reader = new StreamReader(path);
             object obj = deserializer.Deserialize(reader);
             SerializeEDMX.SerializeEdmx XmlData = (SerializeEDMX.SerializeEdmx)obj;
             reader.Close();
+
         }
     }
 }
