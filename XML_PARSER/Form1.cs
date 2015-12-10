@@ -32,7 +32,6 @@ namespace XML_PARSER
             //objEdmx edmx = new objEdmx(path);
 
             SerializeEDMX.EdmxWrapper edmx = new EdmxWrapper(path);
-            var r = edmx.GetFunctionImportMapping();
         }
     }
 }
