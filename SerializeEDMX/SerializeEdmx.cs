@@ -6,16 +6,11 @@ using System.Threading.Tasks;
 
 namespace SerializeEDMX
 {
-    public partial class SerializeEdmx
-    {
-        
-
-    }
 
     /// <remarks/>
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.microsoft.com/ado/2008/10/edmx")]
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://schemas.microsoft.com/ado/2008/10/edmx", IsNullable = false)]
-    public partial class SerializeEdmx
+    public partial class Edmx
     {
 
         private EdmxRuntime runtimeField;
@@ -3251,9 +3246,6 @@ namespace SerializeEDMX
             }
         }
     }
-
-    
-
 
 
 }

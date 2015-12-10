@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EdmxWrapper.cs" />
     <Compile Include="SerializeEdmx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

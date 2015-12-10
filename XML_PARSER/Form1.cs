@@ -10,8 +10,6 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Xml;
 using System.Xml.XPath;
-using EDMX;
-using MyXmlDocument;
 using System.Xml.Serialization;
 using SerializeEDMX;
 using System.IO;
@@ -29,16 +27,12 @@ namespace XML_PARSER
         {
             string path;
             //path = @"D:\My Data\Github Repo\XML_PARSER\XML_PARSER\Sample.xml";
-            path = @"D:\My Data\Github Repo\XML_PARSER\Core.edmx";
+            path = @"D:\My Data\Github Repo\Temp\Core.edmx";
 
             //objEdmx edmx = new objEdmx(path);
 
-            XmlSerializer deserializer = new XmlSerializer(typeof(SerializeEDMX.SerializeEdmx));
-            TextReader reader = new StreamReader(path);
-            object obj = deserializer.Deserialize(reader);
-            SerializeEDMX.SerializeEdmx XmlData = (SerializeEDMX.SerializeEdmx)obj;
-            reader.Close();
-
+            SerializeEDMX.EdmxWrapper edmx = new EdmxWrapper(path);
+            var r = edmx.GetFunctionImportMapping();
         }
     }
 }
