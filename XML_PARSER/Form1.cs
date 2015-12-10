@@ -7,6 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
+using System.Xml;
+using System.Xml.XPath;
+using EDMX;
+using MyXmlDocument;
+using System.Xml.Serialization;
+using SerializeEDMX;
+using System.IO;
 
 namespace XML_PARSER
 {
@@ -16,5 +24,36 @@ namespace XML_PARSER
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            string path;
+            //path = @"D:\My Data\Github Repo\XML_PARSER\XML_PARSER\Sample.xml";
+            path = @"D:\My Data\Github Repo\XML_PARSER\Core.edmx";
+
+            //objEdmx edmx = new objEdmx(path);
+
+            XmlSerializer deserializer = new XmlSerializer(typeof(SerializeEDMX.SerializeEdmx));
+            TextReader reader = new StreamReader(path);
+            object obj = deserializer.Deserialize(reader);
+            SerializeEDMX.SerializeEdmx XmlData = (SerializeEDMX.SerializeEdmx)obj;
+            reader.Close();
+
+        }
     }
 }
+
+/*
+           //var query = from department in doc.Elements("edmx:Edmx").Elements("edmx:Runtime")
+                       from item in department.Elements("edmx:StorageModels")
+                       select item;
+                       //select new Item
+                       //{
+                       //    DepartmentName = department.Attribute("Name").Value,
+                       //    DepartmentNames = department.Attributes().Where(a => a.Name != "Name").ToDictionary(a => a.Name.LocalName, a => a.Value),
+                       //    Name = item.Attribute("Name").Value,
+                       //    Names = item.Attributes().Where(a => a.Name != "Name").ToDictionary(a => a.Name.LocalName, a => a.Value),
+                       //};
+            
+           var items = query.ToList();
+           */
